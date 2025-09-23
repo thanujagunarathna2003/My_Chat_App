@@ -3,37 +3,31 @@ import { View } from "react-native";
 interface Circle {
     circleWidth: number;
     circleHeight: number;
-    circleColor: string;
     circleBorderRadius: number;
+    circleColor?: string;
+    className?: string;
     circleTopValue?: number;
     circleRightValue?: number;
     circleBottomValue?: number;
     circleLeftValue?: number;
 }
 
-export default function CircleShape({
-    circleWidth,
-    circleHeight,
-    circleColor,
-    circleBorderRadius,
-    circleTopValue,
-    circleRightValue,
-    circleBottomValue,
-    circleLeftValue,
-}: Circle) {
-    return(
+export default function CircleShape(c: Circle) {
+    return (
         <View
+            className={`${c.className ?? ""}`}
             style={{
-                width:circleWidth,
-                height:circleHeight,
-                backgroundColor:circleColor,
-                borderRadius:circleBorderRadius,
-                position:'absolute',
+                width: c.circleWidth,
+                height: c.circleHeight,
+                borderRadius: c.circleBorderRadius,
+                position: 'absolute',
 
-                ...(circleTopValue !== undefined && {top:circleTopValue}),
-                ...(circleRightValue !== undefined && {right:circleRightValue}),
-                ...(circleBottomValue !== undefined && {bottom:circleBottomValue}),
-                ...(circleLeftValue !== undefined && {left:circleLeftValue}),
+                ...(c.circleColor !== undefined && { backgroundColor: c.circleColor }),
+                ...(c.circleTopValue !== undefined && { top: c.circleTopValue }),
+                ...(c.circleRightValue !== undefined && { right: c.circleRightValue }),
+                ...(c.circleBottomValue !== undefined && { bottom: c.circleBottomValue }),
+                ...(c.circleLeftValue !== undefined && { left: c.circleLeftValue }),
+                zIndex: 0,
             }}
         >
 
