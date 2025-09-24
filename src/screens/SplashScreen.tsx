@@ -6,11 +6,11 @@ import CircleShape from "../components/CircleShape";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStak } from "../../App";
+import { RootStack } from "../../App";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "../theme/ThemePrivider";
 
-type Props = NativeStackNavigationProp<RootStak, "SplashScreen">;
+type Props = NativeStackNavigationProp<RootStack, "SplashScreen">;
 
 export default function SplashScrean() {
 

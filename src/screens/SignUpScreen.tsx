@@ -13,8 +13,17 @@ import { AlertNotificationRoot } from "react-native-alert-notification";
 import { FloatingLabelInput } from "react-native-floating-label-input";
 import { useState } from "react";
 import { useTheme } from "../theme/ThemePrivider";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStack } from "../../App";
+import { useNavigation } from "@react-navigation/native";
+
+type SignUpProps = NativeStackNavigationProp<RootStack, "SignUpScreen">;
 
 export default function SignUpScreen() {
+
+  const navigation = useNavigation<SignUpProps>();
+
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const { applied } = useTheme();
@@ -27,18 +36,18 @@ export default function SignUpScreen() {
     <AlertNotificationRoot>
       <KeyboardAvoidingView
         behavior={Platform.OS === "android" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "android" ? 100:100}
+        keyboardVerticalOffset={Platform.OS === "android" ? 100 : 100}
         className="flex-1 items-center dark:bg-slate-950"
       >
         <SafeAreaView className="justify-center items-center p-5">
           <StatusBar hidden={true} />
           <Image source={logo} style={{
-                        width: 150,
-                        height: 150,
-                        borderWidth: 4,
-                        borderColor: applied === "dark" ? "#FFF" : "#262729",
-                        borderRadius: 100
-                    }}  />
+            width: 150,
+            height: 150,
+            borderWidth: 4,
+            borderColor: applied === "dark" ? "#FFF" : "#262729",
+            borderRadius: 100
+          }} />
           <View className="w-full justify-start items-start top-20">
             <Text className="font-bold text-neutral-950 dark:text-slate-100">
               Create your account and start the conversation With TG App
@@ -55,12 +64,14 @@ export default function SignUpScreen() {
             <View className="w-full my-3">
               <FloatingLabelInput value={lastName}
                 onChangeText={setLastName}
-                label={"Enter Your Last Name"}/>
+                label={"Enter Your Last Name"} />
             </View>
           </View>
         </SafeAreaView>
         <View className="absolute bottom-5 w-full p-5">
-          <Pressable className="bg-sky-600 h-14 justify-center items-center rounded-full">
+          <Pressable className="bg-sky-600 h-14 justify-center items-center rounded-full"
+            onPress={() => navigation.replace("ContactScreen")}
+          >
             <Text className="text-slate-100 dark:text-slate-100 font-bold text-2xl">
               Next
             </Text>
