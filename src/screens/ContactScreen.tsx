@@ -19,6 +19,9 @@ import CountryPicker, {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStack } from "../../App";
+import { useUserRegistration } from "../components/UserContext";
+import { validateCountryCode, validatePhoneNo } from "../util/Validation";
+import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 
 type ContactProps = NativeStackNavigationProp<RootStack, "ContactScreen">;
 
@@ -29,6 +32,10 @@ export default function ContactScreen() {
     const [countryCode, setCountryCode] = useState<CountryCode>("LK"); // default country code
     const [country, setCountry] = useState<Country | null>(null);
     const [show, setShow] = useState<boolean>(false);
+
+    const { userData, setUserData } = useUserRegistration();
+    const [callingCode, setCallingCode] = useState("+94");
+    const [phoneNo, setPhoneNo] = useState("");
 
     return (
         <SafeAreaView className="flex-1 bg-white items-center">
@@ -82,19 +89,50 @@ export default function ContactScreen() {
                                 className="h-16 font-bold text-lg border-y-2 border-y-sky-600 w-[18%]"
                                 placeholder="+94"
                                 editable={false}
-                                value={country ? `+${country.callingCode}` : ``}
+                                value={country ? `+${country.callingCode}` : callingCode}
+                                onChangeText={(text) => {
+                                    setCallingCode(text);
+                                }}
                             />
                             <TextInput
                                 inputMode="tel"
                                 className="h-16 font-bold text-lg border-y-2 border-y-sky-600 w-[80%] ml-2"
                                 placeholder="77 #### ###"
+                                value={phoneNo}
+                                onChangeText={(text) => {
+                                    setPhoneNo(text);
+                                }}
                             />
                         </View>
                     </View>
                     <View className="mt-16 w-full">
                         <Pressable className="justify-center items-center bg-sky-600 w-full h-14 rounded-full"
                             onPress={() => {
-                                navigation.replace("AvatarScreen");
+                                const validCountryCode = validateCountryCode(callingCode);
+                                const validPhoneNo = validatePhoneNo(phoneNo);
+
+                                if (validCountryCode) {
+                                    Toast.show({
+                                        type: ALERT_TYPE.WARNING,
+                                        title: "Warning",
+                                        textBody: validCountryCode,
+                                    });
+                                } else if (validPhoneNo) {
+                                    Toast.show({
+                                        type: ALERT_TYPE.WARNING,
+                                        title: "Warning",
+                                        textBody: validPhoneNo,
+                                    });
+                                } else {
+                                    setUserData((previous) => ({
+                                        ...previous,
+                                        countryCode: country
+                                            ? `+${country.callingCode}`
+                                            : callingCode,
+                                        contactNo: phoneNo,
+                                    }));
+                                    navigation.replace("AvatarScreen");
+                                }
                             }}
                         >
                             <Text className="text-xl font-bold text-slate-50">Next</Text>

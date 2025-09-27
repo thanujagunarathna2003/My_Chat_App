@@ -10,9 +10,14 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
+import { useUserRegistration } from "../components/UserContext";
+import { validateProfileImage } from "../util/Validation";
+import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 
 export default function AvatarScreen() {
   const [image, setImage] = useState<string | null>(null);
+
+  const { userData, setUserData } = useUserRegistration();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -23,6 +28,10 @@ export default function AvatarScreen() {
     });
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setUserData((previous) => ({
+        ...previous,
+        profileImage: result.assets[0].uri,
+      }));
     }
   };
 
@@ -78,7 +87,13 @@ export default function AvatarScreen() {
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                  onPress={() => setImage(Image.resolveAssetSource(item).uri)}
+                  onPress={() => {
+                    setImage(Image.resolveAssetSource(item).uri)
+                    setUserData((previous) => ({
+                      ...previous,
+                      profileImage: Image.resolveAssetSource(item).uri,
+                    }));
+                  }}
                 >
                   <Image
                     source={item}
@@ -93,7 +108,24 @@ export default function AvatarScreen() {
         </View>
 
         <View className="mt-2 w-full px-5">
-          <Pressable className="h-14 bg-sky-600 items-center justify-center rounded-full">
+          <Pressable
+            className="h-14 bg-sky-600 items-center justify-center rounded-full"
+            onPress={() => {
+              const validProfile = validateProfileImage(
+                userData.profileImage ?
+                  { uri: userData.profileImage, type: "", fileSize: 0 } : null
+              );
+              if (validProfile) {
+                Toast.show({
+                  type: ALERT_TYPE.WARNING,
+                  title: "Warning",
+                  textBody: "Select a Profile Image or Avatar",
+                });
+              } else {
+                console.log("done");
+              }
+            }}
+          >
             <Text className="font-bold text-lg text-slate-50">
               Create Account
             </Text>
