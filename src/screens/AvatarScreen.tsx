@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Pressable,
@@ -13,8 +14,18 @@ import { useState } from "react";
 import { useUserRegistration } from "../components/UserContext";
 import { validateProfileImage } from "../util/Validation";
 import { ALERT_TYPE, Toast } from "react-native-alert-notification";
+import { createNewAccount } from "../api/UserService";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStack } from "../../App";
+import { useNavigation } from "@react-navigation/native";
+
+type AvatarScreenProps = NativeStackNavigationProp<RootStack, "AvatarScreen">;
 
 export default function AvatarScreen() {
+
+  const navigation = useNavigation<AvatarScreenProps>();
+  const [loading, setLoading] = useState(false);
+
   const [image, setImage] = useState<string | null>(null);
 
   const { userData, setUserData } = useUserRegistration();
@@ -109,8 +120,9 @@ export default function AvatarScreen() {
 
         <View className="mt-2 w-full px-5">
           <Pressable
+            disabled={loading ? true : false}
             className="h-14 bg-sky-600 items-center justify-center rounded-full"
-            onPress={() => {
+            onPress={async () => {
               const validProfile = validateProfileImage(
                 userData.profileImage ?
                   { uri: userData.profileImage, type: "", fileSize: 0 } : null
@@ -122,13 +134,33 @@ export default function AvatarScreen() {
                   textBody: "Select a Profile Image or Avatar",
                 });
               } else {
-                console.log("done");
+                try {
+                  setLoading(true);
+                  const response = await createNewAccount(userData);
+                  if (response.status) {
+                    navigation.replace("HomeScreen");
+                  } else {
+                    Toast.show({
+                      type: ALERT_TYPE.WARNING,
+                      title: "Warning",
+                      textBody: response.message,
+                    });
+                  }
+                } catch (error) {
+                  console.log(error);
+                } finally {
+                  setLoading(false);
+                }
               }
             }}
           >
-            <Text className="font-bold text-lg text-slate-50">
-              Create Account
-            </Text>
+            {loading ? (
+              <ActivityIndicator size={'large'} color={"red"} />
+            ) : (
+              <Text className="font-bold text-lg text-slate-50">
+                Create Account
+              </Text>
+            )}
           </Pressable>
         </View>
       </View>
