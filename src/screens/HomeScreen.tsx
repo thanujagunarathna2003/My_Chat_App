@@ -75,9 +75,9 @@ const chats = [
 export default function HomeScreen() {
   const navigation = useNavigation<props>();
   const [search, setSearch] = useState("");
-    useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
-      title: "ChatApp",
+      title: "TG APP",
       headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
       headerRight: () =>
         <View className="flex-row space-x-4">
@@ -94,7 +94,17 @@ export default function HomeScreen() {
   });
 
   const renderItem = ({ item }: any) => (
-    <TouchableOpacity className="flex-row items-center justify-between bg-gray-200 py-2 px-3 my-1 rounded-lg">
+    <TouchableOpacity
+      className="flex-row items-center justify-between bg-gray-200 py-2 px-3 my-1 rounded-lg"
+      onPress={() => {
+        navigation.navigate("SingleChatScreen", {
+          chatId: 1,
+          friendName: "Anjana",
+          lastSeenTime: "8:07pm",
+          profileImage: require("../../assets/avatar/avatar_1.png"),
+        });
+      }}
+    >
 
       <View className="flex-row items-center flex-1">
         <Image source={item.profile} className="h-16 w-16 rounded-full" />

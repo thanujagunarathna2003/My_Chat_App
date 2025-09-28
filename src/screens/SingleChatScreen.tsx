@@ -1,4 +1,4 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlatList, Image, KeyboardAvoidingView, Platform, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { RootStack } from "../../App";
@@ -15,13 +15,14 @@ type Message = {
 };
 
 
-type SingleChatScreenProps = NativeStackNavigationProp<RootStack, "SingleChatScreen">
+type SingleChatScreenProps = NativeStackScreenProps<RootStack, "SingleChatScreen">
 
-export default function SingleChatScreen() {
+export default function SingleChatScreen({
+    route,
+    navigation,
+}: SingleChatScreenProps) {
 
-    const navigation = useNavigation<SingleChatScreenProps>();
-
-
+    const { chatId, friendName, lastSeenTime, profileImage } = route.params;
 
     const [message, setMessage] = useState<Message[]>([
 
@@ -64,8 +65,8 @@ export default function SingleChatScreen() {
                     />
 
                     <View className="space-y-2">
-                        <Text className="font-bold text-2xl">Sahan Bandara</Text>
-                        <Text className="italic text-xs font-bold text-gray-500">Last seen today at 11.00 am</Text>
+                        <Text className="font-bold text-2xl">{friendName}</Text>
+                        <Text className="italic text-xs font-bold text-gray-500">Last seen {lastSeenTime}</Text>
                     </View>
 
                 </View>
@@ -162,7 +163,7 @@ export default function SingleChatScreen() {
                     />
                     <TouchableOpacity className="bg-sky-600 w-12 h-12 items-center justify-center rounded-full ml-2 mb-1"
                         onPress={sendMessage}
-                        
+
                     >
                         <Ionicons name="send" size={22} color="black" />
 
