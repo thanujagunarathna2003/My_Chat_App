@@ -5,9 +5,9 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLayoutEffect, useState } from "react";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useChatList } from "../socket/UserChatList";
 
-type props = NativeStackNavigationProp<RootStack, "HomeScreen">;
-const chats = [
+ const chats = [
   {
     id: 1,
     name: "Hashen Malsha",
@@ -72,9 +72,16 @@ const chats = [
     unread: 2,
     profile: require("../../assets/avatar/avatar_6.png"),
   },];
+
+
+type props = NativeStackNavigationProp<RootStack, "HomeScreen">;
+
 export default function HomeScreen() {
   const navigation = useNavigation<props>();
   const [search, setSearch] = useState("");
+
+    const chatList = useChatList();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: "TG APP",
