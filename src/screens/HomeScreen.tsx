@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useLayoutEffect, useState } from "react";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useChatList } from "../socket/UserChatList";
+import { formatChatTime } from "../util/DateFormatter";
 
  const chats = [
   {
@@ -80,7 +81,7 @@ export default function HomeScreen() {
   const navigation = useNavigation<props>();
   const [search, setSearch] = useState("");
 
-    const chatList = useChatList();
+  const chatList = useChatList();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -93,39 +94,46 @@ export default function HomeScreen() {
         </View>
     });
   }, [navigation]);
-  const filteredChats = chats.filter((chat) => {
-    return (chat.name.toLowerCase().includes(search.toLowerCase())
+
+  const filteredChats = [...chatList].filter((chat) => {
+    return (
+      chat.friendName.toLowerCase().includes(search.toLowerCase())
       ||
       chat.lastMessage.toLowerCase().includes(search.toLowerCase())
     );
-  });
+  })
+    .sort(
+      (a, b) =>
+        new Date(b.lastTimeStamp).getTime() -
+        new Date(a.lastTimeStamp).getTime()
+    );
 
   const renderItem = ({ item }: any) => (
     <TouchableOpacity
       className="flex-row items-center justify-between bg-gray-200 py-2 px-3 my-1 rounded-lg"
       onPress={() => {
         navigation.navigate("SingleChatScreen", {
-          chatId: 1,
-          friendName: "Anjana",
-          lastSeenTime: "8:07pm",
-          profileImage: require("../../assets/avatar/avatar_1.png"),
+          chatId: item.friendId,
+          friendName: item.friendName,
+          lastSeenTime: formatChatTime(item.lastTimeStamp),
+          profileImage: item.profileImage,
         });
       }}
     >
 
       <View className="flex-row items-center flex-1">
-        <Image source={item.profile} className="h-16 w-16 rounded-full" />
+        <Image source={{uri: item.profileImage}} className="h-16 w-16 rounded-full" />
         <View className="ml-3 flex-1">
-          <Text className="font-bold text-lg" numberOfLines={1} ellipsizeMode="tail">{item.name}</Text>
+          <Text className="font-bold text-lg" numberOfLines={1} ellipsizeMode="tail">{item.friendName}</Text>
           <Text className="text-gray-500" numberOfLines={1} ellipsizeMode="tail">{item.lastMessage}</Text>
         </View>
       </View>
 
       <View className="items-end">
-        <Text className="text-gray-400 text-sm">{item.time}</Text>
-        {item.unread > 0 && (
+        <Text className="text-gray-400 text-sm">{formatChatTime(item.lastTimeStamp)}</Text>
+        {item.unreadCount > 0 && (
           <View className="bg-sky-600 rounded-full h-6 w-6 items-center justify-center mt-1">
-            <Text className="text-white font-bold text-sm">{item.unread}</Text>
+            <Text className="text-white font-bold text-sm">{item.unreadCount}</Text>
           </View>
         )}
       </View>

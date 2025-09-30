@@ -7,16 +7,24 @@ export interface User {
     countryCode: string;
     contactNo: string;
     profileImage?: string;
+    createdAt: string;
+    updatedAt: string;
+    status: string;
 }
 
 export interface Chat {
-    id: number;
-    message: string;
+    friendId: number;
+    friendName:string;
+    lastMessage: string;
+    lastTimeStamp:string;
+    unreadCount:number;
+    profileImage:string;
     from: User;
     to: User;
     createdAt: string;
     updatedAt: string;
-    status: "SENT" | "DELIVERED" | "READ";
+    status:string;
+    message:string;
 }
 
 export interface WSRequest{
@@ -28,5 +36,5 @@ export interface WSRequest{
 
 export interface WSResponse{
     type:string;
-    data:any;
+    payload:any;
 }
