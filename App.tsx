@@ -15,6 +15,7 @@ import { AlertNotificationRoot } from 'react-native-alert-notification';
 import HomeTabs from './src/screens/HomeTabs';
 import SingleChatScreen from './src/screens/SingleChatScreen';
 import { WebSocketProvider } from './src/socket/WebSocketProvider';
+import NewChatScreen from './src/screens/NewChatScreen';
 import { ThemeProvider } from './src/theme/ThemePrivider';
 
 export type RootStack = {
@@ -32,6 +33,7 @@ export type RootStack = {
     lastSeenTime: string;
     profileImage: string;
   };
+  NewChatScreen:undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
@@ -41,6 +43,7 @@ export default function App() {
   return (
     <AlertNotificationRoot>
       <WebSocketProvider userId={USER_ID}>
+
         <ThemeProvider>
           <UserRegistrationProvider>
             <NavigationContainer>
@@ -51,9 +54,14 @@ export default function App() {
                 <Stack.Screen name="AvatarScreen" component={AvatarScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="HomeScreen" component={HomeTabs} options={{ headerShown: false }} />
+                <Stack.Screen name="SingleChatScreen" component={SingleChatScreen} />
+
                 <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
                 <Stack.Screen name="SettingScreen" component={SettingScreen} />
-                <Stack.Screen name="SingleChatScreen" component={SingleChatScreen} />
+                <Stack.Screen 
+                name="NewChatScreen" 
+                component={NewChatScreen} 
+                />
               </Stack.Navigator>
             </NavigationContainer>
           </UserRegistrationProvider>

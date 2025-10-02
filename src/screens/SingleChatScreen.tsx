@@ -37,16 +37,10 @@ export default function SingleChatScreen({
 
     useLayoutEffect(() => {
         navigation.setOptions({
+            headerBackVisible: true,
             title: "",
             headerLeft: () => (
                 <View className="flex-row items-center gap-2">
-                    <TouchableOpacity
-                        className="justify-center items-center"
-                        onPress={() => {
-                            navigation.goBack();
-                        }}>
-                        <Ionicons name="arrow-back-sharp" size={24} color="black" />
-                    </TouchableOpacity>
                     <Image
                         source={{ uri: profileImage }}
                         className="h-14 w-14 rounded-full border-2 border-gray-400 p-1"
@@ -56,8 +50,8 @@ export default function SingleChatScreen({
                         <Text className="font-bold text-2xl">
                             {friend?.firstName.toString()} {friend?.lastName.toString()}
                         </Text>
-                        <Text 
-                        className="italic text-xs font-bold text-gray-500">
+                        <Text
+                            className="italic text-xs font-bold text-gray-500">
                             {friend?.status === "ONLINE"
                                 ? "online"
                                 : `Last Seen ${formatChatTime(
@@ -75,7 +69,7 @@ export default function SingleChatScreen({
                 </TouchableOpacity>
             ),
         });
-    }, [navigation,friend]);
+    }, [navigation, friend]);
 
     const renderItem = ({ item }: { item: Chat }) => {
 
@@ -96,7 +90,7 @@ export default function SingleChatScreen({
 
                 <View className="flex-row justify-end items-center mt-1">
                     <Text className={`text-white italic text-xs me-2`}>{formatChatTime(item.createdAt)}</Text>
-                  {isMe && (
+                    {isMe && (
                         <Ionicons name={
                             item.status === "READ"
                                 ? 'checkmark-done-sharp'
