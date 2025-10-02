@@ -12,7 +12,7 @@ import "../../global.css";
 import { ALERT_TYPE, AlertNotificationRoot, Toast } from "react-native-alert-notification";
 import { FloatingLabelInput } from "react-native-floating-label-input";
 import { useState } from "react";
-import { useTheme } from "../theme/ThemePrivider";
+import { ThemeProvider, useTheme } from "../theme/ThemePrivider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStack } from "../../App";
 import { useNavigation } from "@react-navigation/native";
@@ -24,7 +24,7 @@ type SignUpProps = NativeStackNavigationProp<RootStack, "SignUpScreen">;
 export default function SignUpScreen() {
 
   const navigation = useNavigation<SignUpProps>();
-  
+
   const { applied } = useTheme();
   const logo =
     applied === "dark"
@@ -50,39 +50,40 @@ export default function SignUpScreen() {
           borderColor: applied === "dark" ? "#FFF" : "#262729",
           borderRadius: 100
         }} />
-        <View className="w-full justify-start items-start top-20">
+        <View className="w-full justify-start items-start top-5">
           <Text className="font-bold text-neutral-950 dark:text-slate-100">
             Create your account and start the conversation With TG App
           </Text>
         </View>
-        <View className="self-stretch top-20">
+        <View className="self-stretch top-5">
           <View className="w-full my-3">
             <FloatingLabelInput
-              label={"Enter Your First Name"}
+              label="Enter Your First Name"
               value={userData.firstName}
-              onChangeText={(text) => {
-                setUserData((previous) => ({
-                  ...previous,
-                  firstName: text,
-                }));
+              onChangeText={(text) =>
+                setUserData((prev) => ({ ...prev, firstName: text }))
+              }
+              inputStyles={{
+                color: applied === "dark" ? "#FFF" : "#000"
               }}
             />
           </View>
-          <View className="w-full my-3">
+
+          <View className="w-full my-1">
             <FloatingLabelInput
-              label={"Enter Your Last Name"}
+              label="Enter Your Last Name"
               value={userData.lastName}
-              onChangeText={(text) => {
-                setUserData((previous) => ({
-                  ...previous,
-                  lastName: text,
-                }));
+              onChangeText={(text) =>
+                setUserData((prev) => ({ ...prev, lastName: text }))
+              }
+              inputStyles={{
+                color: applied === "dark" ? "#FFF" : "#000"
               }}
             />
           </View>
         </View>
       </SafeAreaView>
-      <View className="absolute bottom-5 w-full p-5">
+      <View className="container w-full p-10">
         <Pressable
           className="bg-sky-600 h-14 justify-center items-center rounded-full"
           onPress={() => {

@@ -193,7 +193,7 @@ export default function HomeScreen() {
 
       <View className="absolute bottom-8 right-6">
         <TouchableOpacity
-          className="h-16 w-16 bg-sky-600 rounded-full justify-center items-center shadow-xl active:bg-sky-700"
+          className="h-16 w-16 bg-sky-600 rounded-full justify-center items-center shadow-xl touch-pinch-zoom"
           onPress={() => navigation.navigate("NewChatScreen")}
         >
           <Ionicons name="chatbox-ellipses" size={30} color="white" />

@@ -12,6 +12,9 @@ type NewChatsScreenProp = NativeStackNavigationProp<RootStack, "NewChatScreen">
 
 export default function NewChatsScreen() {
     const navigation = useNavigation<NewChatsScreenProp>();
+    const [search, setSearch] = useState("");
+    const users = useUserList();
+
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "",
@@ -27,7 +30,7 @@ export default function NewChatsScreen() {
                     </TouchableOpacity>
                     <View className="flex-col">
                         <Text className="text-lg font-bold">Select Contact</Text>
-                        <Text className="text-sm font-bold">10 Contact</Text>
+                        <Text className="text-sm font-bold">{users.length} Contact</Text>
                     </View>
                 </View>
             ),
@@ -37,10 +40,8 @@ export default function NewChatsScreen() {
                 </View>
             ),
         });
-    }, [navigation]);
+    }, [navigation,users]);
 
-    const [search, setSearch] = useState("");
-    const users = useUserList();
     const renderItem = ({ item }: any) => (
         <TouchableOpacity onPress={() => {
             navigation.navigate("SingleChatScreen", { chatId: item.id, friendName: `${item.firstName} ${item.lastName}`, lastSeenTime: item.updatedAt, profileImage: item.profileImage ? item.profileImage : `https://ui-avatars.com/api/?name=${item.firstName}+${item.lastName}&background=random` })
@@ -66,7 +67,10 @@ export default function NewChatsScreen() {
             </View>
             <View className="flex-col gap-y-1">
                 <Text className="font-bold text-xl">{item.firstName} {item.lastName}</Text>
-                <Text className="text-md italic">{item.status === "ACTIVE" ? "Already in friendList" : "Not in friendList"}</Text>
+                <Text className="text-md italic">{item.status === "ACTIVE" 
+                ? "lready in Friend List; Message Now" 
+                : "Hey there! I am using ChatApp"}
+                </Text>
             </View>
 
         </TouchableOpacity>
@@ -140,7 +144,10 @@ export default function NewChatsScreen() {
                     <Text className="mb-2 text-sm font-semibold text-gray-500">
                         Quick Actions
                     </Text>
-                    <TouchableOpacity className="flex-row items-center gap-x-3 px-4 py-3 bg-sky-100 rounded-xl">
+                    <TouchableOpacity 
+                    className="flex-row items-center gap-x-3 px-4 py-3 bg-sky-100 rounded-xl"
+                    onPress={() => navigation.navigate("NewContactScreen")}                    
+                    >
                         <View className="items-center justify-center w-12 h-12 bg-sky-600 rounded-full">
                             <Feather name="user-plus" size={24} color="white" />
                         </View>
@@ -158,7 +165,6 @@ export default function NewChatsScreen() {
                         data={filteredUsers}
                         renderItem={renderItem}
                         keyExtractor={(_, index) => index.toString()}
-
                     />
                 </View>
             </View>
