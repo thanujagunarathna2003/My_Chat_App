@@ -14,7 +14,6 @@ export function useUserList() {
     const onMessage = (event: MessageEvent) => {
       const response: WSResponse = JSON.parse(event.data);
       if (response.type === "all_users") {
-        console.log(response);
         setUsers(response.payload);
       }
     };

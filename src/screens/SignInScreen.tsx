@@ -1,7 +1,5 @@
 import { View } from "react-native";
 
-export default function SignInScreen(){
-    return(
-        <View></View>
-    );
+export default function SignInScreen() {
+  return <View></View>;
 }

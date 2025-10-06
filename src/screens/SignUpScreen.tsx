@@ -9,10 +9,14 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import "../../global.css";
-import { ALERT_TYPE, AlertNotificationRoot, Toast } from "react-native-alert-notification";
+import {
+  ALERT_TYPE,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
+import { useTheme } from "../theme/ThemeProvider";
 import { FloatingLabelInput } from "react-native-floating-label-input";
 import { useState } from "react";
-import { ThemeProvider, useTheme } from "../theme/ThemePrivider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStack } from "../../App";
 import { useNavigation } from "@react-navigation/native";
@@ -22,19 +26,17 @@ import { validateFirstName, validateLastName } from "../util/Validation";
 type SignUpProps = NativeStackNavigationProp<RootStack, "SignUpScreen">;
 
 export default function SignUpScreen() {
-
   const navigation = useNavigation<SignUpProps>();
-
   const { applied } = useTheme();
   const logo =
-    applied === "dark"
-      ? require("../../assets/logo2_dark.png")
-      : require("../../assets/logo2.png");
+    applied === "light"
+      ? require("../../assets/logo-dark.png")
+      : require("../../assets/logo.png");
 
   const { userData, setUserData } = useUserRegistration();
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "android" ? "padding" : "height"}
@@ -43,7 +45,8 @@ export default function SignUpScreen() {
     >
       <SafeAreaView className="justify-center items-center p-5">
         <StatusBar hidden={true} />
-        <Image source={logo} style={{
+        <Image source={logo} 
+        style={{
           width: 150,
           height: 150,
           borderWidth: 4,
@@ -58,24 +61,29 @@ export default function SignUpScreen() {
         <View className="self-stretch top-5">
           <View className="w-full my-3">
             <FloatingLabelInput
-              label="Enter Your First Name"
+              label={"Enter Your First Name"}
               value={userData.firstName}
-              onChangeText={(text) =>
-                setUserData((prev) => ({ ...prev, firstName: text }))
-              }
+              onChangeText={(text) => {
+                setUserData((previous) => ({
+                  ...previous,
+                  firstName: text,
+                }));
+              }}
               inputStyles={{
                 color: applied === "dark" ? "#FFF" : "#000"
               }}
             />
           </View>
-
-          <View className="w-full my-1">
+          <View className="w-full my-3">
             <FloatingLabelInput
-              label="Enter Your Last Name"
+              label={"Enter Your Last Name"}
               value={userData.lastName}
-              onChangeText={(text) =>
-                setUserData((prev) => ({ ...prev, lastName: text }))
-              }
+              onChangeText={(text) => {
+                setUserData((previous) => ({
+                  ...previous,
+                  lastName: text,
+                }));
+              }}
               inputStyles={{
                 color: applied === "dark" ? "#FFF" : "#000"
               }}
@@ -85,7 +93,7 @@ export default function SignUpScreen() {
       </SafeAreaView>
       <View className="container w-full p-10">
         <Pressable
-          className="bg-sky-600 h-14 justify-center items-center rounded-full"
+           className="bg-sky-600 h-14 justify-center items-center rounded-full"
           onPress={() => {
             let validFirstName = validateFirstName(userData.firstName);
             let validLastName = validateLastName(userData.lastName);
@@ -108,9 +116,7 @@ export default function SignUpScreen() {
             }
           }}
         >
-          <Text className="text-slate-100 dark:text-slate-100 font-bold text-2xl">
-            Next
-          </Text>
+          <Text className="text-slate-100 dark:text-slate-100 font-bold text-2xl">Next</Text>
         </Pressable>
       </View>
     </KeyboardAvoidingView>

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useUserRegistration } from "../components/UserContext";
 import { validateProfileImage } from "../util/Validation";
 import { ALERT_TYPE, Toast } from "react-native-alert-notification";
@@ -18,12 +18,12 @@ import { createNewAccount } from "../api/UserService";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStack } from "../../App";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../components/AuthProvider";
 
-type AvatarScreenProps = NativeStackNavigationProp<RootStack, "AvatarScreen">;
+type AvataScreenProps = NativeStackNavigationProp<RootStack, "AvatarScreen">;
 
 export default function AvatarScreen() {
-
-  const navigation = useNavigation<AvatarScreenProps>();
+  const navigation = useNavigation<AvataScreenProps>();
   const [loading, setLoading] = useState(false);
 
   const [image, setImage] = useState<string | null>(null);
@@ -55,13 +55,15 @@ export default function AvatarScreen() {
     require("../../assets/avatar/avatar_6.png"),
   ];
 
+  const auth = useContext(AuthContext);
+
   return (
     <SafeAreaView className="bg-white flex-1">
       <StatusBar hidden={true} />
       <View className="flex-1 items-center ">
         <View>
           <Image
-            source={require("../../assets/logo2.png")}
+            source={require("../../assets/logo.png")}
             className="h-40 w-36"
           />
         </View>
@@ -99,7 +101,7 @@ export default function AvatarScreen() {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => {
-                    setImage(Image.resolveAssetSource(item).uri)
+                    setImage(Image.resolveAssetSource(item).uri);
                     setUserData((previous) => ({
                       ...previous,
                       profileImage: Image.resolveAssetSource(item).uri,
@@ -124,21 +126,26 @@ export default function AvatarScreen() {
             className="h-14 bg-sky-600 items-center justify-center rounded-full"
             onPress={async () => {
               const validProfile = validateProfileImage(
-                userData.profileImage ?
-                  { uri: userData.profileImage, type: "", fileSize: 0 } : null
+                userData.profileImage
+                  ? { uri: userData.profileImage, type: "", fileSize: 0 }
+                  : null
               );
               if (validProfile) {
                 Toast.show({
                   type: ALERT_TYPE.WARNING,
                   title: "Warning",
-                  textBody: "Select a Profile Image or Avatar",
+                  textBody: "Select a profile image or an avatar",
                 });
               } else {
                 try {
                   setLoading(true);
                   const response = await createNewAccount(userData);
                   if (response.status) {
-                    navigation.replace("HomeScreen");
+                    const id = response.userId;
+                    if (auth) {
+                      await auth.signUp(String(id));
+                      // navigation.replace("HomeScreen");
+                    }
                   } else {
                     Toast.show({
                       type: ALERT_TYPE.WARNING,
@@ -155,7 +162,7 @@ export default function AvatarScreen() {
             }}
           >
             {loading ? (
-              <ActivityIndicator size={'large'} color={"red"} />
+              <ActivityIndicator size={"large"} color={"blue"} />
             ) : (
               <Text className="font-bold text-lg text-slate-50">
                 Create Account
