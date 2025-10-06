@@ -19,6 +19,7 @@ import {
 import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 import { useSendNewContact } from "../socket/UseSendNewContact";
 import { useTheme } from "../theme/ThemeProvider";
+import "../../global.css";
 
 type NewContactScreenProp = NativeStackNavigationProp<
   RootStack,
@@ -79,36 +80,30 @@ export default function NewContactScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1">
       <View className="flex-1 px-5">
-        <View className="flex-row items-center gap-x-2  h-14">
+        <View className="flex-row items-center gap-x-2 py-2">
           <Feather name="user" size={24} color="black" />
-          <View className="flex-1 h-14">
+          <View className="flex-1">
             <FloatingLabelInput
               label="First Name"
-              className=""
               value={firstName}
               onChangeText={(text) => setFirstName(text)}
-              inputStyles={{
-                color: applied === "dark" ? "#FFF" : "#000"
-              }}
             />
           </View>
         </View>
-        <View className="flex-row items-center gap-x-2 mt-8 h-14">
+
+        <View className="flex-row items-center gap-x-2 mt-6 py-2">
           <Feather name="user" size={24} color="black" />
-          <View className="flex-1 h-14">
+          <View className="flex-1">
             <FloatingLabelInput
               label="Last Name"
-              className=""
               value={lastName}
               onChangeText={(text) => setLastName(text)}
-              inputStyles={{
-                color: applied === "dark" ? "#FFF" : "#000"
-              }}
             />
           </View>
         </View>
+
         <View className="border-b-2 border-b-sky-800 justify-center items-center flex-row h-14 mt-8">
           <CountryPicker
             countryCode={countryCode}
@@ -129,12 +124,12 @@ export default function NewContactScreen() {
           <AntDesign
             name="caret-down"
             size={18}
-            color="black"
+            color="dark"
             style={{ marginTop: 5 }}
           />
         </View>
-        <View className="flex-row items-center gap-x-2 mt-8 h-14">
-          <Feather name="phone" size={24} color="black" />
+        <View className="flex-row items-center gap-x-2 mt-6 py-2">
+          <Feather name="phone" size={24} color="dark" />
           <View className="h-14 items-center justify-center px-2 w-28 max-w-28">
             <FloatingLabelInput
               label=""
@@ -143,27 +138,21 @@ export default function NewContactScreen() {
               onChangeText={(text) => {
                 setCallingCode(text);
               }}
-              inputStyles={{
-                color: applied === "dark" ? "#FFF" : "#000"
-              }}
+
             />
           </View>
           <View className="flex-1 h-14">
             <FloatingLabelInput
               label="Phone"
               inputMode="tel"
-              className=""
               value={phoneNo}
               onChangeText={(text) => setPhoneNo(text)}
-              inputStyles={{
-                color: applied === "dark" ? "#FFF" : "#000"
-              }}
             />
           </View>
         </View>
         <View className="mt-10">
           <Pressable
-            className="bg-green-600 h-14 items-center justify-center rounded-full"
+            className="bg-sky-600 h-14 items-center justify-center rounded-full"
             onPress={() => {
               const firstNameValid = validateFirstName(firstName);
               const lastNameValid = validateLastName(lastName);

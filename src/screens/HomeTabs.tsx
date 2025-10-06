@@ -18,8 +18,8 @@ export default function HomeTabs() {
           return <Ionicons name={iconName as any} size={28} color={color} />;
         },
         tabBarLabelStyle:{fontSize:16,fontWeight:'800'},
-        tabBarActiveTintColor:"#16a34a",
-        tabBarInactiveTintColor:"#9ca3af",
+        tabBarActiveTintColor:"#0284C7",
+        tabBarInactiveTintColor:"#6b7280",
         tabBarStyle:{
           height:80,
           backgroundColor:"#fff",

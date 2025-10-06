@@ -38,16 +38,16 @@ export default function HomeScreen() {
             Platform.OS === "android" ? `py-5` : `py-0`
           }`}
         >
-          <View className="flex-1 items-start ms-3">
+          <View className="flex-1 items-start ms-3 mt-3">
             <Text className="font-bold text-2xl">TG App</Text>
           </View>
-          <View className="me-3">
+          <View className="me-3 mt-4">
             <View className="flex-row space-x-4">
               <TouchableOpacity className="me-5">
-                <Ionicons name="camera" size={26} color="black" />
+                <Ionicons name="camera" size={24} color="black" />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <Ionicons name="ellipsis-vertical" size={24} color="black" />
+                <Ionicons name="ellipsis-vertical" size={22} color="black" />
               </TouchableOpacity>
               <Modal
                 animationType="fade"
@@ -62,7 +62,7 @@ export default function HomeScreen() {
                   }}
                 >
                   <Pressable
-                    className="bg-red-100"
+                    className="bg-transparent"
                     onPress={(e) => {
                       e.stopPropagation(); // prevent modal close inside of the modal
                     }}
@@ -205,7 +205,7 @@ export default function HomeScreen() {
       className="flex-1 bg-white p-0"
       edges={["right", "bottom", "left"]}
     >
-      <StatusBar barStyle="dark-content" hidden={false} />
+      <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#fff"/>
       <View className="flex-row items-center mx-4 mt-4 h-12 px-4 bg-gray-100 rounded-full shadow-md border border-gray-200">
         <Ionicons name="search" size={20} color={"gray"} />
         <TextInput

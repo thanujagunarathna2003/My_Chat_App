@@ -38,7 +38,7 @@ export default function SplashScreen() {
 
   const { applied } = useTheme();
   const logo =
-    applied === "light"
+    applied === "dark"
       ? require("../../assets/logo-dark.png")
       : require("../../assets/logo.png");
 
@@ -127,9 +127,6 @@ export default function SplashScreen() {
           }} />
       </Animated.View>
 
-      <Animated.View style={animatedStyle}>
-        <Image source={logo} style={{ height: 200, width: 220 }} />
-      </Animated.View>
 
       <Animated.View className="absolute bottom-5 items-center" style={animatedStyle}>
           <Text className={`font-bold ${applied === "dark" ? "text-white" : "text-black"}`}>

@@ -29,7 +29,7 @@ export default function SignUpScreen() {
   const navigation = useNavigation<SignUpProps>();
   const { applied } = useTheme();
   const logo =
-    applied === "light"
+    applied === "dark"
       ? require("../../assets/logo-dark.png")
       : require("../../assets/logo.png");
 
