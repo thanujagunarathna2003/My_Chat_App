@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { UserRegistrationData } from "../components/UserContext";
 
 
-const API = process.env.EXPO_PUBLIC_APP_URL + "/MyChatApp";
+const API = process.env.EXPO_PUBLIC_APP_URL+"/MyChatApp";
 
 export const createNewAccount = async (
   userRegistrationData: UserRegistrationData

@@ -22,6 +22,7 @@ import { RootStack } from "../../App";
 import { useNavigation } from "@react-navigation/native";
 import { useUserRegistration } from "../components/UserContext";
 import { validateFirstName, validateLastName } from "../util/Validation";
+import { Ionicons } from "@expo/vector-icons";
 
 type SignUpProps = NativeStackNavigationProp<RootStack, "SignUpScreen">;
 
@@ -45,21 +46,33 @@ export default function SignUpScreen() {
     >
       <SafeAreaView className="justify-center items-center p-5">
         <StatusBar hidden={true} />
-        <Image source={logo} 
-        style={{
-          width: 150,
-          height: 150,
-          borderWidth: 4,
-          borderColor: applied === "dark" ? "#FFF" : "#262729",
-          borderRadius: 100
-        }} />
+        <Image source={logo}
+          style={{
+            width: 100,
+            height: 100,
+            borderWidth: 4,
+            borderColor: applied === "dark" ? "#FFF" : "#262729",
+            borderRadius: 100
+          }} />
+        <View className="container w-full mt-4 justify-center">
+          <Pressable
+            onPress={() => {
+              navigation.navigate("SignInScreen");
+            }}
+          >
+            <Text className="text-sky-600 dark:text-slate-100 font-bold text-xl underline">
+              Login
+              <Ionicons name="arrow-forward" size={16} color="dark" />
+            </Text>
+          </Pressable>
+        </View>
         <View className="w-full justify-start items-start top-5">
           <Text className="font-bold text-neutral-950 dark:text-slate-100">
             Create your account and start the conversation With TG App
           </Text>
         </View>
         <View className="self-stretch top-5">
-          <View className="w-full my-3">
+          <View className="w-full my-2">
             <FloatingLabelInput
               label={"Enter Your First Name"}
               value={userData.firstName}
@@ -74,7 +87,7 @@ export default function SignUpScreen() {
               }}
             />
           </View>
-          <View className="w-full my-3">
+          <View className="w-full my-1">
             <FloatingLabelInput
               label={"Enter Your Last Name"}
               value={userData.lastName}
@@ -91,9 +104,9 @@ export default function SignUpScreen() {
           </View>
         </View>
       </SafeAreaView>
-      <View className="container w-full p-10">
+      <View className="flex-1 w-full p-5 mt-[-10]">
         <Pressable
-           className="bg-sky-600 h-14 justify-center items-center rounded-full"
+          className="bg-sky-600 h-14 justify-center items-center rounded-full"
           onPress={() => {
             let validFirstName = validateFirstName(userData.firstName);
             let validLastName = validateLastName(userData.lastName);
@@ -119,6 +132,7 @@ export default function SignUpScreen() {
           <Text className="text-slate-100 dark:text-slate-100 font-bold text-2xl">Next</Text>
         </Pressable>
       </View>
+
     </KeyboardAvoidingView>
   );
 }

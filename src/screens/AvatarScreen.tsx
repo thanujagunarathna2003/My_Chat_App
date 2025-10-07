@@ -162,7 +162,7 @@ export default function AvatarScreen() {
             }}
           >
             {loading ? (
-              <ActivityIndicator size={"large"} color={"blue"} />
+              <ActivityIndicator size={"large"} color={"white"} />
             ) : (
               <Text className="font-bold text-lg text-slate-50">
                 Create Account

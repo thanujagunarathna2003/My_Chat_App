@@ -83,7 +83,7 @@ export default function SingleChatScreen({
       <View
         className={`my-1 px-3 py-2 max-w-[75%] ${
           isMe
-            ? `self-end bg-green-900 rounded-tl-xl rounded-bl-xl rounded-br-xl`
+            ? `self-end bg-sky-700 rounded-tl-xl rounded-bl-xl rounded-br-xl`
             : `rounded-tr-xl rounded-bl-xl rounded-br-xl self-start bg-gray-700`
         }`}
       >
@@ -102,7 +102,7 @@ export default function SingleChatScreen({
                   : "checkmark"
               }
               size={20}
-              color={item.status === "READ" ? "#312e81" : "#0f172a"}
+              color={item.status === "READ" ? "#02f2fa" : "#fff"}
             />
           )}
         </View>
