@@ -5,7 +5,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function StatusScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-black">
+    <SafeAreaView className="flex-1 bg-white">
       <ScrollView showsVerticalScrollIndicator={false}>
         
         <TouchableOpacity className="flex-row items-center p-3">
@@ -19,17 +19,17 @@ export default function StatusScreen() {
             </View>
           </View>
           <View className="ml-3">
-            <Text className="text-base font-semibold dark:text-white">
+            <Text className="text-base font-semibol text-black">
               My Status
             </Text>
-            <Text className="text-sm text-gray-500 dark:text-gray-400">
+            <Text className="text-sm text-gray-500">
               Tap to add status update
             </Text>
           </View>
         </TouchableOpacity>
 
-        <View className="bg-gray-100 dark:bg-gray-900 p-2">
-          <Text className="text-sm font-semibold text-gray-500 dark:text-gray-400">
+        <View className="bg-sky-100 p-2">
+          <Text className="text-sm font-semibold text-gray-500">
             Recent updates
           </Text>
         </View>
@@ -40,10 +40,10 @@ export default function StatusScreen() {
             className="w-14 h-14 rounded-full border-2 border-sky-600"
           />
           <View className="ml-3">
-            <Text className="text-base font-semibold dark:text-white">
+            <Text className="text-base font-semibold text-black">
               Thanuja Gunarathna
             </Text>
-            <Text className="text-sm text-gray-500 dark:text-gray-400">
+            <Text className="text-sm text-gray-500">
               Today, 10:00 AM
             </Text>
           </View>
@@ -55,17 +55,17 @@ export default function StatusScreen() {
             className="w-14 h-14 rounded-full border-2 border-sky-600"
           />
           <View className="ml-3">
-            <Text className="text-base font-semibold dark:text-white">
+            <Text className="text-base font-semibold text-black">
               Nimal Perera
             </Text>
-            <Text className="text-sm text-gray-500 dark:text-gray-400">
+            <Text className="text-sm text-gray-500">
               Yesterday, 8:45 PM
             </Text>
           </View>
         </TouchableOpacity>
 
-        <View className="bg-gray-100 dark:bg-gray-900 p-2">
-          <Text className="text-sm font-semibold text-gray-500 dark:text-gray-400">
+        <View className="bg-sky-100 p-2">
+          <Text className="text-sm font-semibold text-gray-500">
             Viewed updates
           </Text>
         </View>
@@ -76,10 +76,10 @@ export default function StatusScreen() {
             className="w-14 h-14 rounded-full border-2 border-gray-400"
           />
           <View className="ml-3">
-            <Text className="text-base font-semibold dark:text-white">
+            <Text className="text-base font-semibold text-black">
               Anusha Kumari
             </Text>
-            <Text className="text-sm text-gray-500 dark:text-gray-400">
+            <Text className="text-sm text-gray-500">
               Yesterday, 2:30 PM
             </Text>
           </View>
@@ -88,7 +88,7 @@ export default function StatusScreen() {
 
       {/* Floating Buttons */}
       <View className="absolute bottom-8 right-6 items-center">
-        <TouchableOpacity className="mb-4 bg-gray-200 dark:bg-gray-800 p-3 rounded-full shadow">
+        <TouchableOpacity className="mb-4 bg-gray-200 p-3 rounded-full shadow">
           <MaterialCommunityIcons name="pencil" size={22} color="black" />
         </TouchableOpacity>
         <TouchableOpacity className="bg-sky-600 p-4 rounded-full shadow-lg">

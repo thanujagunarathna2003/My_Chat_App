@@ -189,7 +189,7 @@ export default function HomeScreen() {
             {item.lastMessage}
           </Text>
           {item.unreadCount > 0 && (
-            <View className="bg-sky-600 rounded-full px-2 py-2 ms-2">
+            <View className="bg-sky-600 rounded-full px-3 py-2 ms-2">
               <Text className="text-slate-50 text-xs font-bold">
                 {item.unreadCount}
               </Text>

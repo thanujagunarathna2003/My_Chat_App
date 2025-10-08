@@ -19,6 +19,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStack } from "../../App";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../components/AuthProvider";
+import { useTheme } from "../theme/ThemeProvider";
 
 type AvataScreenProps = NativeStackNavigationProp<RootStack, "AvatarScreen">;
 
@@ -29,6 +30,12 @@ export default function AvatarScreen() {
   const [image, setImage] = useState<string | null>(null);
 
   const { userData, setUserData } = useUserRegistration();
+
+  const { applied } = useTheme();
+  const logo =
+    applied === "dark"
+      ? require("../../assets/logo-dark.png")
+      : require("../../assets/logo.png");
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -58,20 +65,24 @@ export default function AvatarScreen() {
   const auth = useContext(AuthContext);
 
   return (
-    <SafeAreaView className="bg-white flex-1">
+    <SafeAreaView className="flex-1 bg-slate-50 dark:bg-slate-950">
       <StatusBar hidden={true} />
-      <View className="flex-1 items-center ">
+      <View className="flex-1 items-center mt-4">
         <View>
-          <Image
-            source={require("../../assets/logo.png")}
-            className="h-40 w-36"
-          />
+          <Image source={logo}
+              style={{
+                width: 150,
+                height: 150,
+                borderWidth: 4,
+                borderColor: applied === "dark" ? "#FFF" : "#262729",
+                borderRadius: 100
+              }} />
         </View>
         <View className="items-center">
-          <Text className="font-bold text-lg text-slate-700">
+          <Text className="font-bold text-lg text-slate-600 mt-4">
             Choose a profile image
           </Text>
-          <View className="items-center mt-2 h-72">
+          <View className="items-center mt-4 h-72">
             <Pressable
               className="h-[120] w-[120] rounded-full bg-gray-100 justify-center items-center border-2 border-gray-400
             border-dashed"
@@ -91,7 +102,7 @@ export default function AvatarScreen() {
                 </View>
               )}
             </Pressable>
-            <Text className="text-lg my-2 text-slate-700 font-bold">
+            <Text className="text-lg my-2 text-slate-600 font-bold mt-4">
               Or select an avatar
             </Text>
             <FlatList
@@ -110,7 +121,7 @@ export default function AvatarScreen() {
                 >
                   <Image
                     source={item}
-                    className="h-20 w-20 rounded-full mx-2 border-2 border-gray-200"
+                    className="h-20 w-20 rounded-full mx-2 border-2 border-gray-200 mt-4"
                   />
                 </TouchableOpacity>
               )}
@@ -120,7 +131,7 @@ export default function AvatarScreen() {
           </View>
         </View>
 
-        <View className="mt-2 w-full px-5">
+        <View className="mt-32 w-full px-5">
           <Pressable
             disabled={loading ? true : false}
             className="h-14 bg-sky-600 items-center justify-center rounded-full"

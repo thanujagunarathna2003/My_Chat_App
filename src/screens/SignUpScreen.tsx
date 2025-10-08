@@ -48,8 +48,8 @@ export default function SignUpScreen() {
         <StatusBar hidden={true} />
         <Image source={logo}
           style={{
-            width: 100,
-            height: 100,
+            width: 150,
+            height: 150,
             borderWidth: 4,
             borderColor: applied === "dark" ? "#FFF" : "#262729",
             borderRadius: 100
@@ -60,7 +60,7 @@ export default function SignUpScreen() {
               navigation.navigate("SignInScreen");
             }}
           >
-            <Text className="text-sky-600 dark:text-slate-100 font-bold text-xl underline">
+            <Text className="text-sky-600 dark:text-orange-300 font-bold text-xl underline">
               Login
               <Ionicons name="arrow-forward" size={16} color="dark" />
             </Text>
@@ -104,7 +104,7 @@ export default function SignUpScreen() {
           </View>
         </View>
       </SafeAreaView>
-      <View className="flex-1 w-full p-5 mt-[-10]">
+      <View className="flex-1 w-full p-5">
         <Pressable
           className="bg-sky-600 h-14 justify-center items-center rounded-full"
           onPress={() => {

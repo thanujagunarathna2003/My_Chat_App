@@ -97,7 +97,7 @@ export default function CallsScreen() {
           <View
             className="h-14 w-14 rounded-full justify-center items-center"
             style={{
-              backgroundColor: applied === "dark" ? "#374151" : "#e2e8f0",
+              backgroundColor: "#e2e8f0",
             }}
           >
             <Text className="font-bold text-base text-gray-700">
@@ -114,8 +114,7 @@ export default function CallsScreen() {
       <View className="flex-1 ms-3">
         <View className="flex-row justify-between items-center">
           <Text
-            className={`text-base font-bold ${
-              applied === "dark" ? "text-white" : "text-gray-800"
+            className={`text-base font-bold "text-gray-800"
             }`}
           >
             {item.name}
@@ -167,15 +166,13 @@ export default function CallsScreen() {
   return (
     <SafeAreaView
       edges={["top", "left", "right"]}
-      className={`${applied === "dark" ? "bg-slate-900" : "bg-white"} flex-1`}
+      className={"flex-1 bg-white"}
     >
       <StatusBar barStyle={applied === "dark" ? "light-content" : "dark-content"} />
 
       {/* Header */}
       <View
-        className={`flex-row items-center justify-between px-4 py-3 ${
-          applied === "dark" ? "bg-slate-900" : "bg-white"
-        }`}
+        className={`flex-row items-center justify-between px-4 py-3`}
       >
       </View>
 
@@ -226,16 +223,16 @@ export default function CallsScreen() {
       <View className="absolute bottom-8 right-6 flex-col items-end space-y-3">
         <TouchableOpacity
           onPress={() => console.log("New video call")}
-          className="h-14 w-14 bg-white rounded-full justify-center items-center shadow"
+          className="h-12 w-12 bg-gray-200 rounded-full justify-center items-center shadow"
         >
           <Ionicons name="videocam" size={22} color="#111827" />
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => console.log("New voice call")}
-          className="h-16 w-16 bg-sky-600 rounded-full justify-center items-center shadow-xl"
+          className="h-14 w-14 bg-sky-600 rounded-full justify-center items-center shadow-xl mt-4"
         >
-          <Ionicons name="call" size={26} color="white" />
+          <Ionicons name="call" size={24} color="white" />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
